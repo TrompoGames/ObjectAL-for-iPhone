@@ -44,7 +44,7 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS_PROTOTYPE(OALAudioSession);
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && !TARGET_OS_TV
 
 /** \cond */
 /**
@@ -269,7 +269,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-implementations"
-
+#if !TARGET_OS_TV
 - (float) preferredIOBufferDuration
 {
     return [self getFloatProperty:kAudioSessionProperty_PreferredHardwareIOBufferDuration];
@@ -304,7 +304,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 {
 	return [[self audioRoute] isEqualToString:@""];
 }
-
+#endif
 #pragma clang diagnostic pop // "-Wdeprecated-implementations"
 
 
@@ -313,7 +313,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
+#if !TARGET_OS_TV
 - (UInt32) getIntProperty:(AudioSessionPropertyID) property
 {
 	UInt32 value = 0;
@@ -386,7 +386,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
     }
     return ((AVAudioSession*)[AVAudioSession sharedInstance]).otherAudioPlaying;
 }
-
+#endif
 #pragma clang diagnostic pop // "-Wdeprecated-declarations"
 
 - (void) setAudioCategory:(NSString*) audioCategory
@@ -426,7 +426,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 		allowIpod = NO;
 		ipodDucking = NO;
 	}
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_1
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_1 && !TARGET_OS_TV
 	else if([AVAudioSessionCategoryAudioProcessing isEqualToString:audioSessionCategory])
 	{
 		honorSilentSwitch = NO;
